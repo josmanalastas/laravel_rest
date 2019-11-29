@@ -40,7 +40,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof ValidationException) {MethodNotAllowedHttpException
+        if ($exception instanceof ValidationException) {
             $status = $exception->status;
             $message = collect($exception->errors())
                 ->map(function ($item, $key) {
@@ -58,7 +58,14 @@ class Handler extends ExceptionHandler
                 $status
             );
         } else {
-            return parent::render($request, $exception);
+            return response()->json(
+                [
+                    'status' => "Error",
+                    'error' => "URL invalid"
+                ],
+                200
+            );
+            //return parent::render($request, $exception);
         }
 
     }
