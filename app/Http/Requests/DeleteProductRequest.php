@@ -31,7 +31,6 @@ class DeleteProductRequest extends RequestAbstract
     {
 
         return [
-            "id" => "required"
         ];
     }
 }

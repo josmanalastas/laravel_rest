@@ -38,14 +38,16 @@ class Authenticate
     {
         $token = $request->header('Authorization');
         if (!$token) {
-            return response('Unauthorized.', 401);
+            $response = ["error" => "Unauthorized.", "status" => 401];
+            return $response;
         }
         $key = env("JWT_KEY", "salt");
 
         try {
             $JWTDetails = JWT::decode($token, $key, array('HS256'));
         } catch(\Exception $ex) {
-            return response('Unauthorized.', 401);
+            $response = ["error" => "Unauthorized.", "status" => 401];
+            return $response;
         }
 
         return $next($request);

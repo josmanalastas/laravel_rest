@@ -28,14 +28,36 @@ class ProductController extends Controller
      *
      * @return json string
      */
-    public function index()
+    public function getProducts()
     {
         $response = [];
         //get products with reviews
         $products = Product::with('reviews')->get();
-        $data = ["data" => $products, "status" => Response::HTTP_OK];
-        return $data;
+        $response = ["data" => $products, "status" => Response::HTTP_OK];
+        return $response;
     }
+
+    /**
+     * Get Product
+     *
+     * @since 1.0
+     *
+     * @version 1.0.0
+     *
+     * @return json string
+     */
+    public function getProduct($id)
+    {
+        $response = [];
+        $product = Product::find($id);
+        if ($product) {
+            $response = ["data" => $product, "status" => Response::HTTP_OK];
+        } else {
+            $response = ["error" => "Invalid product id", "status" => Response::HTTP_OK];
+        }
+        return $response;
+    }
+
 
     /**
      * Create new product
@@ -48,10 +70,9 @@ class ProductController extends Controller
      *
      * @return json string
      */
-    public function store(CreateProductRequest $request)
+    public function createProduct(CreateProductRequest $request)
     {
         $response = [];
-        $id = $request->get('id');
         $name = $request->get('name');
         $description = $request->get('description');
 
@@ -78,10 +99,9 @@ class ProductController extends Controller
      *
      * @return json string
      */
-    public function update(UpdateProductRequest $request)
+    public function updateProduct($id, UpdateProductRequest $request)
     {
         $response = [];
-        $id = $request->get('id');
         $name = $request->get('name');
         $description = $request->get('description');
         $product = Product::find($id);
@@ -107,10 +127,9 @@ class ProductController extends Controller
      *
      * @return json string
      */
-    public function destroy(DeleteProductRequest $request)
+    public function deleteProduct($id, DeleteProductRequest $request)
     {
         $response = [];
-        $id = $request->get('id');
         $product = Product::find($id);
         if ($product) {
             $product->delete();

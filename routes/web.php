@@ -16,12 +16,13 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(
-    ['prefix' => 'products/', 'middleware' => 'auth'],
+    ['prefix' => 'products', 'middleware' => 'auth'],
     function ($app) {
-        $app->get('', 'ProductController@index');
-        $app->post('', 'ProductController@store');
-        $app->put('', 'ProductController@update');
-        $app->delete('', 'ProductController@destroy');
+        $app->get('', 'ProductController@getProducts');
+        $app->get('/{id}', 'ProductController@getProduct');
+        $app->post('', 'ProductController@createProduct');
+        $app->put('/{id}', 'ProductController@updateProduct');
+        $app->delete('/{id}', 'ProductController@deleteProduct');
     }
 );
 

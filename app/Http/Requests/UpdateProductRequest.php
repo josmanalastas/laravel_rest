@@ -30,7 +30,6 @@ class UpdateProductRequest extends RequestAbstract
     public function rules()
     {
         return [
-            "id" => "required",
             "name" => "required|min:7",
             "description" => "required|min:20",
         ];
